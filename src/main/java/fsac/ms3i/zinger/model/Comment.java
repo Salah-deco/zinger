@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -17,9 +18,16 @@ import java.util.Date;
 public class Comment {
     @Id
     private String Id;
+
+    @NotNull(message = "body of comment cannot be null")
     private String body;
+
+    @NotNull(message = "Auth to comment")
     private String userId;
+
+    @NotNull(message = "postId cannot be null")
     private String postId;
+
     private Date createdAt;
     private Date updateAt;
 }

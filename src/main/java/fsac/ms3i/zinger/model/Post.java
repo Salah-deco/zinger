@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,13 @@ import java.util.Map;
 public class Post {
     @Id
     private String id;
+
+    @NotNull(message = "need auth to create a post")
     private String userId;
+
+    @NotNull(message = "type cannot be null")
     private String type;
+
     private String body;
     private String url;
     private Date createdAt;
