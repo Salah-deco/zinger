@@ -17,7 +17,7 @@ import java.util.Date;
 @Document(collection="Reports")
 public class Report {
     @Id
-    private String Id;
+    private String id;
 
     @NotNull(message = "userId cannot be null")
     private String userId;

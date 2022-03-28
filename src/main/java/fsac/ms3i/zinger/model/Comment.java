@@ -17,7 +17,7 @@ import java.util.Date;
 @Document(collection="Comments")
 public class Comment {
     @Id
-    private String Id;
+    private String id;
 
     @NotNull(message = "body of comment cannot be null")
     private String body;
