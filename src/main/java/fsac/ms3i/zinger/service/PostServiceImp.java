@@ -1,7 +1,9 @@
 package fsac.ms3i.zinger.service;
 
 import fsac.ms3i.zinger.exception.PostCollectionException;
+import fsac.ms3i.zinger.exception.UserCollectionException;
 import fsac.ms3i.zinger.model.Post;
+import fsac.ms3i.zinger.model.User;
 import fsac.ms3i.zinger.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,10 @@ public class PostServiceImp implements PostService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private UserService userService;
+
+
     @Override
     public Post createPost(Post post) throws ConstraintViolationException, PostCollectionException {
         post.setCreatedAt(new Date(System.currentTimeMillis()));
@@ -27,6 +33,11 @@ public class PostServiceImp implements PostService {
         post.setReactions(new HashMap<>());
         post.setReports(new ArrayList<>());
         // more validation
+        try {
+            User createBy = userService.getUser(post.getUserId());
+        } catch (UserCollectionException e) {
+            throw new PostCollectionException(PostCollectionException.PostCreateByInvalidUser(post.getUserId()));
+        }
 
         // save
         postRepository.save(post);

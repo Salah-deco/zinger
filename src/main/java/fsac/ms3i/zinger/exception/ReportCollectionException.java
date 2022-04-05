@@ -10,4 +10,8 @@ public class ReportCollectionException extends Exception {
     public static String NotFoundException(String id) {
         return "Report with " + id + " not found!";
     }
+
+    public static String ReportInvalid() {
+        return "Invalid report!";
+    }
 }

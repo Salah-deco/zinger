@@ -35,4 +35,8 @@ public class Post {
     private List<String> comments;
     private List<String> reports;
     private Map<String, Object> reactions;
+
+    public void addReport(String reportId) {
+        this.reports.add(reportId);
+    }
 }

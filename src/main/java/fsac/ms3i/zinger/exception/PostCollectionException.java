@@ -10,4 +10,8 @@ public class PostCollectionException extends Exception {
     public static String NotFoundException(String id) {
         return "Post with " + id + " not found!";
     }
+
+    public static String PostCreateByInvalidUser(String id) {
+        return "The post was not created, Invalid user with id " + id;
+    }
 }

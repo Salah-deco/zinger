@@ -12,5 +12,4 @@ public interface PostService {
     public Post createPost(Post post) throws ConstraintViolationException, PostCollectionException;
     public void updatePost(String id, Post post) throws ConstraintViolationException, PostCollectionException;
     public void deletePost(String id) throws PostCollectionException;
-
 }

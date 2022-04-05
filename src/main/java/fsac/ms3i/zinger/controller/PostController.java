@@ -2,8 +2,11 @@ package fsac.ms3i.zinger.controller;
 
 import fsac.ms3i.zinger.exception.PostCollectionException;
 import fsac.ms3i.zinger.model.Post;
+import fsac.ms3i.zinger.repository.PostRepository;
 import fsac.ms3i.zinger.service.PostServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,9 @@ import java.util.List;
 
 @RestController
 public class PostController {
+
+    @Autowired
+    private PostRepository postRepository;
 
     @Autowired
     private PostServiceImp postServiceImp;
@@ -62,5 +68,12 @@ public class PostController {
         } catch (PostCollectionException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+    }
+
+    // pagination
+    @GetMapping("/page")
+    public ResponseEntity<?> getPage(Pageable page) {
+        Page<Post> posts = postRepository.findAll(page);
+        return new ResponseEntity<>(posts, posts.isEmpty() == false ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }

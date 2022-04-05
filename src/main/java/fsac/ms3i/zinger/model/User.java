@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
@@ -28,6 +29,7 @@ public class User {
     private String last_name;
 
     @NotNull(message = "email cannot be null")
+    @Indexed(unique = true)
     private String email;
 
     @NotNull(message = "passowrd cannot be null")
@@ -38,4 +40,5 @@ public class User {
     private boolean isAdmin;
     List<String> idsPosts;
     List<String> idsComments;
+    // List<String> idsReactions;
 }

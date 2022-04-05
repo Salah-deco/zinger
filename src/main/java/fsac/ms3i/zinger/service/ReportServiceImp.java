@@ -1,7 +1,10 @@
 package fsac.ms3i.zinger.service;
 
 import fsac.ms3i.zinger.exception.ReportCollectionException;
+import fsac.ms3i.zinger.model.Post;
 import fsac.ms3i.zinger.model.Report;
+import fsac.ms3i.zinger.model.User;
+import fsac.ms3i.zinger.repository.PostRepository;
 import fsac.ms3i.zinger.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,15 @@ public class ReportServiceImp implements ReportService {
 
     @Autowired
     private ReportRepository reportRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PostService postService;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @Override
     public List<Report> getReports() {
@@ -41,13 +53,24 @@ public class ReportServiceImp implements ReportService {
     @Override
     public Report createReport(Report report) throws ConstraintViolationException, ReportCollectionException {
         report.setReportAt(new Date(System.currentTimeMillis()));
-        // more validation
+        // validation
+        try {
+            // condition if userId and postId exists
+            User reportedBy = userService.getUser(report.getUserId());
+            Post postReported = postService.getPost(report.getPostId());
 
-        // condition if userId and postId exists
+            // save
+            reportRepository.save(report);
+            // System.out.println(report.getId());
 
-        // save
-        reportRepository.save(report);
-        return report;
+            postReported.addReport(report.getId());
+            // postService.updatePost(postReported.getUserId(), postReported);
+            // solution for the moment
+            postRepository.save(postReported);
+            return report;
+        } catch (Exception e) {
+            throw new ReportCollectionException(ReportCollectionException.ReportInvalid());
+        }
     }
 
     @Override
