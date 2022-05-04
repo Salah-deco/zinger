@@ -6,6 +6,9 @@ import fsac.ms3i.zinger.model.Post;
 import fsac.ms3i.zinger.model.User;
 import fsac.ms3i.zinger.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
@@ -30,7 +33,7 @@ public class PostServiceImp implements PostService {
         post.setCreatedAt(new Date(System.currentTimeMillis()));
         post.setBlocked(false);
         post.setComments(new ArrayList<>());
-        post.setReactions(new HashMap<>());
+        post.setLikes(new ArrayList<>());
         post.setReports(new ArrayList<>());
         // more validation
         try {
@@ -46,11 +49,21 @@ public class PostServiceImp implements PostService {
 
     @Override
     public List<Post> getPosts() {
-        List<Post> posts = postRepository.findAll();
+        List<Post> posts = postRepository.findAll(Sort.by("createdAt"));
         if (posts.size() > 0) {
             return posts;
         } else {
             return new ArrayList<Post>();
+        }
+    }
+
+    @Override
+    public Page<Post> getPosts(Pageable page){
+        Page<Post> posts = postRepository.findAll(page);
+        if (posts == null) {
+            return null;
+        } else {
+            return posts;
         }
     }
 
@@ -95,4 +108,6 @@ public class PostServiceImp implements PostService {
             // Delete post from list post in User model
         }
     }
+
+
 }

@@ -34,6 +34,7 @@ public class User {
 
     @NotNull(message = "passowrd cannot be null")
     private String password;
+    private String image;
     private String bio;
     private Date createdAt;
     private boolean isBlocked;

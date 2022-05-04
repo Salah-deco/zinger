@@ -67,6 +67,7 @@ public class UserServiceImp implements UserService {
             userToUpdate.setLast_name(user.getLast_name() != null ? user.getLast_name() : userToUpdate.getLast_name());
             userToUpdate.setEmail(user.getEmail() != null ? user.getEmail() : userToUpdate.getEmail());
             userToUpdate.setBio(user.getBio() != null ? user.getBio() : userToUpdate.getBio());
+            userToUpdate.setImage(user.getImage() != null ? user.getImage() : userToUpdate.getImage());
 
             userRepository.save(userToUpdate);
         } else {

@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
@@ -34,7 +33,7 @@ public class Post {
     private boolean isBlocked;
     private List<String> comments;
     private List<String> reports;
-    private Map<String, Object> reactions;
+    private List<String> likes; // id of user
 
     public void addReport(String reportId) {
         this.reports.add(reportId);
