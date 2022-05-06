@@ -2,6 +2,7 @@ package fsac.ms3i.zinger.service;
 
 import fsac.ms3i.zinger.exception.CommentCollectionException;
 import fsac.ms3i.zinger.model.Comment;
+import fsac.ms3i.zinger.model.Post;
 import fsac.ms3i.zinger.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,19 @@ public class CommentServiceImp implements CommentService {
             return new ArrayList<Comment>();
         }
     }
-
+//    ajout
+   public List<Comment> commentblock() {
+    	
+        List<Comment> comments = commentRepository.findisBlocked();
+        if (comments.size() > 0) {
+        	
+            return comments;
+            
+        } else {
+            return new ArrayList<Comment>();
+        }
+    }
+//   ajout
     @Override
     public Comment getComment(String id) throws CommentCollectionException {
         Optional<Comment> optionalComment = commentRepository.findById(id);
@@ -49,6 +62,9 @@ public class CommentServiceImp implements CommentService {
         commentRepository.save(comment);
         return comment;
     }
+    
+
+ 
 
     @Override
     public void deleteComment(String id) throws CommentCollectionException {

@@ -68,6 +68,8 @@ public class UserServiceImp implements UserService {
             userToUpdate.setEmail(user.getEmail() != null ? user.getEmail() : userToUpdate.getEmail());
             userToUpdate.setBio(user.getBio() != null ? user.getBio() : userToUpdate.getBio());
 
+            userToUpdate.setBlocked(user.isBlocked() != false ? user.isBlocked() : userToUpdate.isBlocked());
+
             userRepository.save(userToUpdate);
         } else {
             throw new UserCollectionException(UserCollectionException.NotFoundException(id));

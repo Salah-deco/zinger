@@ -33,6 +33,15 @@ public class ReportController {
         }
     }
 
+        @GetMapping("/repoByPost/{postId}")
+    public ResponseEntity<?> repoByPost(@PathVariable("postId") String id) {
+        try {
+            return new ResponseEntity<>(reportServiceImp.repoByPost(id), HttpStatus.OK);
+        } catch (ReportCollectionException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/report")
     public ResponseEntity<?> createReport(@RequestBody Report report) {
         try {

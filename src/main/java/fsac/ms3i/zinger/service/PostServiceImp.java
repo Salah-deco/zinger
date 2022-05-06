@@ -53,6 +53,19 @@ public class PostServiceImp implements PostService {
             return new ArrayList<Post>();
         }
     }
+    
+    
+    public List<Post> postblock() {
+    	
+        List<Post> posts = postRepository.findisBlocked();
+        if (posts.size() > 0) {
+        	
+            return posts;
+            
+        } else {
+            return new ArrayList<Post>();
+        }
+    }
 
     @Override
     public Post getPost(String id) throws PostCollectionException {
@@ -69,7 +82,9 @@ public class PostServiceImp implements PostService {
         Optional<Post> optionalPost = postRepository.findById(id);
         if (optionalPost.isPresent()) {
             Post postToUpdate = optionalPost.get();
-
+            postToUpdate.setUserId(post.getUserId()!= null ? post.getUserId() : postToUpdate.getUserId());
+            postToUpdate.setType(post.getType()!= null ? post.getType() : postToUpdate.getType());
+            postToUpdate.setBlocked(post.isBlocked() != true ? post.isBlocked() : postToUpdate.isBlocked());
             postToUpdate.setBody(post.getBody() != null ? post.getBody() : postToUpdate.getBody());
             postToUpdate.setUpdatedAt(new Date(System.currentTimeMillis()));
 

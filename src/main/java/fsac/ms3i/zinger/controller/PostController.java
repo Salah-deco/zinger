@@ -38,6 +38,11 @@ public class PostController {
         }
     }
 
+    @GetMapping("/postblock")
+    public ResponseEntity<?> postblock() {
+        List<Post> posts = postServiceImp.postblock();
+        return new ResponseEntity<>(posts, posts.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
     @PostMapping("/post")
     public ResponseEntity<?> createPost(@RequestBody Post post) {
         try {

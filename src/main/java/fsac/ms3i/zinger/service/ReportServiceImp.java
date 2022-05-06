@@ -83,4 +83,16 @@ public class ReportServiceImp implements ReportService {
             // ...
         }
     }
+
+    public List<Report> repoByPost(String id) throws ReportCollectionException {
+        List<Report> reports = reportRepository.findBypostId(id);
+        if (reports.size() > 0) {
+            return reports;
+        } else {
+            return new ArrayList<Report>();
+        }
+    }
+    
+    
+    
 }
