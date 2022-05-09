@@ -46,6 +46,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/user/getEmail/{email}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            return new ResponseEntity<>(userOptional, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("ZNG-201", HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/user/add")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         user.setCreatedAt(new Date(System.currentTimeMillis()));

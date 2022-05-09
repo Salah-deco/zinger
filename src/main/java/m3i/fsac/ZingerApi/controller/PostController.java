@@ -58,6 +58,7 @@ public class PostController {
 
         Optional<Post> postOptional = postRepository.findById(post.getId());
         if (postOptional.isPresent()) {
+            userRepository.findById(post.getUserId()).get().setIdPosts(Collections.singletonList(post.getId()));
             return new ResponseEntity<>("ZNG-11", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("ZNG-21", HttpStatus.NOT_FOUND);
@@ -98,7 +99,7 @@ public class PostController {
             if (postOptional.isPresent()) {
                 //delete post from user
                 Optional<User> userTodDelete = userRepository.findByIdPosts(id);
-                userTodDelete.get().getIdPosts().removeIf(ids -> ids.equals(id));
+                //userTodDelete.get().getIdPosts().removeIf(ids -> ids.equals(id));
 
                 //delete post from comment
                 List<Comment> commentToDelete = commentRepository.findByPostId(id);
