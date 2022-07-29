@@ -109,5 +109,30 @@ public class PostServiceImp implements PostService {
         }
     }
 
+    @Override
+    public void likePost(String idPost, String idUser) throws PostCollectionException {
+        Optional<Post> optionalPost = postRepository.findById(idPost);
 
+        if (optionalPost.isPresent()) {
+            Post postToLike = optionalPost.get();
+            // if the post has already liked no need to modify
+            if(postToLike.addLike(idUser)) {
+                postRepository.save(postToLike);
+            }
+        }else {
+            throw new PostCollectionException(PostCollectionException.NotFoundException(idPost));
+        }
+    }
+
+    @Override
+    public void removeLike(String idPost, String idUser) throws PostCollectionException {
+        Optional<Post> optionalPost = postRepository.findById(idPost);
+
+        if (optionalPost.isPresent()) {
+            Post postToRemoveLike = optionalPost.get();
+            if (postToRemoveLike.removeLike(idUser)){
+                postRepository.save(postToRemoveLike);
+            }
+        }
+    }
 }

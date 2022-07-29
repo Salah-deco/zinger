@@ -91,13 +91,13 @@ public class UserServiceImp implements UserService {
         }
     }
 
-    public boolean auth(String email, String password) throws UserCollectionException {
+    public Boolean auth(String email, String password) throws UserCollectionException {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-
-            if (user.getPassword() == this.passwordEncoder.encode(password))
+            if (this.passwordEncoder.matches(password, user.getPassword()))
                 return true;
+                // return optionalUser.get();
             else
                 return false;
         } else {

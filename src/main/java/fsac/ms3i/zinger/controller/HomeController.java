@@ -12,8 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -27,6 +27,9 @@ public class HomeController {
 
     @GetMapping("/home")
     public ResponseEntity<?> home(Pageable page) throws UserCollectionException {
+
+        // verified the S_ID
+//        System.out.println(S_ID);
 
         // User(userId, first_name, last_name, image) post(postId, body, number of likes, number of comments), for admin number of spam
 
@@ -55,7 +58,7 @@ public class HomeController {
                             user.getFirst_name(),
                             user.getLast_name(),
                             user.getImage(),
-                            post.getUserId(),
+                            post.getId(),
                             post.getBody(),
                             post.getType(),
                             post.getUrl(),

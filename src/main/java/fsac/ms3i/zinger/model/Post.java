@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Getter
 @Setter
@@ -37,5 +38,17 @@ public class Post {
 
     public void addReport(String reportId) {
         this.reports.add(reportId);
+    }
+
+    public boolean addLike(String userId) {
+        Boolean liked = this.likes.stream().anyMatch(str -> str.equals(userId));
+        if (!liked) {
+            System.out.println("from Post Model addLike call with userId = " + userId);
+            this.likes.add(userId);
+        }
+        return !liked;
+    }
+    public boolean removeLike(String userId) {
+        return this.likes.remove(userId);
     }
 }

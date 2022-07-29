@@ -12,5 +12,5 @@ public interface UserService {
     public void createUser(User user) throws  ConstraintViolationException, UserCollectionException;
     public void updateUser(String id, User user) throws ConstraintViolationException, UserCollectionException;
     public void blockUser(String id) throws UserCollectionException;
-    public boolean auth(String email, String password) throws UserCollectionException;
+    public Boolean auth(String email, String password) throws UserCollectionException;
 }

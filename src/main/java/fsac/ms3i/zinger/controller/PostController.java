@@ -4,6 +4,7 @@ import fsac.ms3i.zinger.exception.PostCollectionException;
 import fsac.ms3i.zinger.model.Post;
 import fsac.ms3i.zinger.repository.PostRepository;
 import fsac.ms3i.zinger.service.PostServiceImp;
+import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,6 +58,29 @@ public class PostController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (ConstraintViolationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    // like post
+    @PutMapping("/post/like/{id}")
+    public ResponseEntity<?> likePost(@PathVariable("id") String id, @RequestParam String userId) {
+        System.out.println("PUT method: /post/like/" + id + " with param = userId = " + userId);
+        try {
+            postServiceImp.likePost(id, userId);
+            return new ResponseEntity<>("like successfuly", HttpStatus.OK);
+        } catch (PostCollectionException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+    // remove like
+    @PutMapping("/post/removelike/{id}")
+    public ResponseEntity<?> removeLike(@PathVariable("id") String id, @RequestParam String userId) {
+        System.out.println("PUT method: /post/removelike/" + id + " with param = userId = " + userId);
+        try {
+            postServiceImp.removeLike(id, userId);
+            return new ResponseEntity<>("remove like successfuly", HttpStatus.OK);
+        } catch (PostCollectionException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
